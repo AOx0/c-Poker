@@ -36,20 +36,17 @@ Mano crearMano(Carta cartas[5]) {
             &cartas[2],
             &cartas[3],
             &cartas[4],
-        .sonMismaFigura = 0,
+        .sonMismaFigura = 1,
         .numCartasUtiles = 0,
     };
 
-    int primera = -1;
-    int suma = 0;
+    Figura primera;
+
     for (int i=0; i <5; i++) {
-        if (i==0) primera = (int)mano.cartas[i]->figura + 1;
-        suma += (int)mano.cartas[i]->figura + 1;
+        if (i==0) primera = mano.cartas[i]->figura;
+        if (mano.cartas[i]->figura != primera) mano.sonMismaFigura = 0;
     }
 
-    if ((double)suma/(double)primera == 5.0){
-        mano.sonMismaFigura = 1;
-    }
 
     int mayor=0, i_mayor=0;
     for (int i=0; i <5; i++) if (mano.cartas[i]->valor > mayor) {mayor = mano.cartas[i]->valor; i_mayor = i;}

@@ -26,16 +26,26 @@ void evaluaUnaMano(Mano * mano) {
     mostrarTipoMano(mano->puntos);
 }
 
-void evaluaDosManos(Carta deck[13*4], Mano mano1, Mano mano2) {
-    Mesa mesa = crearMesa(deck, mano1, mano2);
-
-    determinarGanador(&mesa);
-    mostrarGanador(&mesa);
-}
-
 void evaluarMesa(Mesa * mesa) {
     determinarGanador(mesa);
     mostrarGanador(mesa);
+}
+
+void evaluaDosManos(Carta deck[13*4], Mano mano1, Mano mano2) {
+    Mesa mesa = crearMesa(deck, mano1, mano2);
+
+    evaluarMesa(&mesa);
+}
+
+void clearScreen() {
+    system("clear");
+}
+
+void pressToContinue() {
+    char misc[50];
+
+    printf("Ingresa cualquier carácter para continuar: ");
+    scanf(" %s", misc);
 }
 
 int main( int argc, char **argv ) {
@@ -90,11 +100,21 @@ int main( int argc, char **argv ) {
         return 0;
     }
 
+    clearScreen();
+
+    puts(
+        "Desarrollado por:\n"
+        "    - Pedro Terán Dominguez\n"
+        "    - Otro wey"
+    );
+
+    pressToContinue();
+    clearScreen();
+
 
     while (1) {
 
         int opcion;
-
         int deck[ 4 ][ 13 ] = { 0 };
         Carta cartas[13 * 4];
         Mesa mesa;
@@ -135,23 +155,34 @@ int main( int argc, char **argv ) {
 
         switch (opcion) {
             case 1:
+                clearScreen();
                 puts("Evaluando la mano:");
                 mostrarMano(mesa.manoUno);
                 evaluaUnaMano(&mesa.manoUno);
 
+                pressToContinue();
+                clearScreen();
                 break;
             case 2:
-                puts("Evaluando como mano 1:");
+                clearScreen();
+                puts("Evaluando la mano del Crupier:");
                 mostrarMano(mesa.manoUno);
                 evaluaUnaMano(&mesa.manoUno);
 
-                puts("Evaluando como mano 2:");
+                puts(" ");
+
+                puts("Evaluando como mano del \"Jugador\":");
                 mostrarMano(mesa.manoDos);
                 evaluaUnaMano(&mesa.manoDos);
                 evaluaDosManos(cartas, mesa.manoUno, mesa.manoDos);
 
+                puts(" ");
+
+                pressToContinue();
+                clearScreen();
                 break;
             case 3:
+                clearScreen();
                 puts("El Crupier tiene: ");
                 mostrarMano(mesa.manoUno);
                 evaluaUnaMano(&mesa.manoUno);
@@ -167,25 +198,30 @@ int main( int argc, char **argv ) {
                 puts("El Crupier terminó con: ");
                 mostrarMano(mesa.manoUno);
                 evaluaUnaMano(&mesa.manoUno);
+
+                pressToContinue();
+                clearScreen();
                 break;
             case 4:
+                clearScreen();
 
                 puts("El Crupier cambiará algunas cartas: \n");
-                printf("Puntos antes: %d\n", mesa.manoUno.puntos);
                 {
                     int changedValues[3] = {-1, -1, -1};
                     juegaCrupier(&mesa, 0, 0, mesa.manoUno.puntos, changedValues);
                 }
                 puts("El Crupier ya cambió sus cartas. Es tu turno.\n");
-                evaluaUnaMano(&mesa.manoUno);
-                printf("Puntos después: %d\n", mesa.manoUno.puntos);
+                calcularYActualizarPuntos(&mesa.manoUno);
 
+                pressToContinue();
+                clearScreen();
 
                 char quiereCambio;
                 int index = -1;
                 int changedValues[3] = {-1, -1,-1};
 
                 for (int i=0; i<3; i++) {
+                    clearScreen();
                     puts("Tus cartas son: ");
                     mostrarMano(mesa.manoDos);
                     evaluaUnaMano(&mesa.manoDos);
@@ -217,6 +253,8 @@ int main( int argc, char **argv ) {
                     }
                 }
 
+                clearScreen();
+
                 puts("Las cartas del Crupier son: ");
                 mostrarMano(mesa.manoUno);
                 evaluaUnaMano(&mesa.manoUno);
@@ -227,16 +265,15 @@ int main( int argc, char **argv ) {
 
                 evaluarMesa(&mesa);
 
+                pressToContinue();
+                clearScreen();
+
                 break;
 
         }
-
-        printf("\n");
     }
 
-
-
-
+    clearScreen();
     return 0;
  
 }

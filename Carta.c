@@ -15,6 +15,6 @@ void imprimirCarta(Carta carta) {
     const char *figura[ 4 ] = { "Corazones", "Diamantes", "Treboles", "Espadas" };
     const char *valor[ 13 ] = { "As", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho",
                           "Nueve", "Diez", "Jota", "Reina", "Rey" };
-    printf("%8s de %s\n", valor[(int)carta.valor], figura[(int)carta.figura]);
+    printf("%8s de %s (%d)\n", valor[(int)carta.valor], figura[(int)carta.figura], carta.valor);
 }
 
