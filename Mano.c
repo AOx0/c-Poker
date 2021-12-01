@@ -2,6 +2,8 @@
 // Created by Alejandro D on 29/11/21.
 //
 
+#define bool int
+
 #include <libc.h>
 #include "Mano.h"
 #include "Puntos.h"
@@ -62,7 +64,7 @@ void mostrarMano(Mano mano) {
     for (int i=0; i <5; i++) {imprimirCarta(*mano.cartas[i]); }
 }
 
-int arrayContainsValue(int valor, int size, const int array[size] ) {
+bool arrayContainsValue(int valor, int size, const int array[size] ) {
     if (size == 0) return 0;
 
     for (int i=0; i<5; i++) {
@@ -74,7 +76,7 @@ int arrayContainsValue(int valor, int size, const int array[size] ) {
     return 0;
 }
 
-int containsValue(Mano mano, Valor valor, int exceptSize,  int exceptArray[exceptSize] ) {
+bool containsValue(Mano mano, Valor valor, int exceptSize,  int exceptArray[exceptSize] ) {
     for (int i=0; i<5; i++) {
         if (mano.cartas[i]->valor == valor && !arrayContainsValue(mano.cartas[i]->valor, exceptSize, exceptArray)) {
             return 1;
@@ -89,7 +91,7 @@ int containsValue(Mano mano, Valor valor, int exceptSize,  int exceptArray[excep
 
 
 
-int containsValues(Mano mano,  int valoresSize, Valor valores[valoresSize], int exceptSize,  int exceptArray[exceptSize]  ) {
+bool containsValues(Mano mano,  int valoresSize, Valor valores[valoresSize], int exceptSize,  int exceptArray[exceptSize]  ) {
     int result = 0;
     for (int i=0; i<valoresSize; i++) {
         result += containsValue(mano, valores[i], exceptSize, exceptArray);
@@ -100,7 +102,7 @@ int containsValues(Mano mano,  int valoresSize, Valor valores[valoresSize], int 
     return 0;
 }
 
-int esEscaleraReal(Mano * mano) {
+bool esEscaleraReal(Mano * mano) {
     Valor valores[] = {Diez, As, Rey, Reina, Jota};
     if ( mano->sonMismaFigura && containsValues(*mano, 5, valores, 0, 0 ) ) {
         int indices[] = {0,1,2,3,4};
@@ -110,7 +112,7 @@ int esEscaleraReal(Mano * mano) {
     return 0;
 }
 
-int esEscaleraDeColor(Mano * mano) {
+bool esEscaleraDeColor(Mano * mano) {
     for (int i=2; i<=14; i++){
         Valor valores[] = {(Valor)i, (Valor)(i+1), (Valor)(i+2), (Valor)(i+3), (Valor)(i+4)};
         if ( mano->sonMismaFigura && containsValues(*mano, 5, valores, 0, 0) ) {
@@ -122,7 +124,7 @@ int esEscaleraDeColor(Mano * mano) {
     return 0;
 }
 
-int esPoquer(Mano * mano) {
+bool esPoquer(Mano * mano) {
     int timesFound;
     int indices[] = {-1,-1,-1,-1,-1};
     for (int i=0; i<5; i++){
@@ -142,7 +144,7 @@ int esPoquer(Mano * mano) {
     return 0;
 }
 
-int esFull(Mano * mano) {
+bool esFull(Mano * mano) {
     int timesFound;
     int found = 0;
     Valor TerciaDeValor;
@@ -172,7 +174,7 @@ int esFull(Mano * mano) {
     return 0;
 }
 
-int esColor(Mano * mano) {
+bool esColor(Mano * mano) {
     if (mano->sonMismaFigura) {
         int indices[] = {0,1,2,3,4};
         memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
@@ -181,7 +183,7 @@ int esColor(Mano * mano) {
     return 0;
 }
 
-int esEscalera(Mano * mano) {
+bool esEscalera(Mano * mano) {
     for (int i=2; i<=14; i++){
         Valor valores[] = {(Valor)i, (Valor)(i+1), (Valor)(i+2), (Valor)(i+3), (Valor)(i+4)};
         if (containsValues(*mano, 5, valores, 0, 0) ) {
@@ -193,7 +195,7 @@ int esEscalera(Mano * mano) {
     return 0;
 }
 
-int esTrio(Mano * mano) {
+bool esTrio(Mano * mano) {
     int indices[] = {-1,-1,-1,-1,-1};
     int timesFound;
     for (int i=0; i<5; i++){
@@ -211,7 +213,7 @@ int esTrio(Mano * mano) {
     return 0;
 }
 
-int esDoblePareja(Mano * mano) {
+bool esDoblePareja(Mano * mano) {
     int timesFound;
     int found = 0;
     int indices[] = {-1,-1,-1,-1,-1};
@@ -248,7 +250,7 @@ int esDoblePareja(Mano * mano) {
     return 0;
 }
 
-int esPareja(Mano * mano) {
+bool esPareja(Mano * mano) {
     int timesFound ;
     int found = 0;
     int indices[] = {-1,-1,-1,-1,-1};

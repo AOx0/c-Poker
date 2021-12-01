@@ -2,6 +2,8 @@
 // Created by Alejandro D on 29/11/21.
 //
 
+#define bool int
+
 #ifndef PEDRO_MANO_H
 #define PEDRO_MANO_H
 
@@ -20,16 +22,20 @@ typedef struct Mano_ {
 Mano crearMano(Carta cartas[5]);
 void mostrarMano(Mano mano);
 
-int esEscaleraReal(Mano * mano);
-int esEscaleraDeColor(Mano * mano);
-int esPoquer(Mano * mano);
-int esFull(Mano * mano);
-int esColor(Mano * mano);
-int esEscalera(Mano * mano);
-int esTrio(Mano * mano);
-int esDoblePareja(Mano * mano);
-int esPareja(Mano * mano);
+bool esEscaleraReal(Mano * mano);
+bool esEscaleraDeColor(Mano * mano);
+bool esPoquer(Mano * mano);
+bool esFull(Mano * mano);
+bool esColor(Mano * mano);
+bool esEscalera(Mano * mano);
+bool esTrio(Mano * mano);
+bool esDoblePareja(Mano * mano);
+bool esPareja(Mano * mano);
 Carta esMasAlta(Mano * mano);
+
+bool arrayContainsValue(int valor, int size, const int array[size] );
+bool containsValue(Mano mano, Valor valor, int exceptSize,  int exceptArray[exceptSize]);
+bool containsValues(Mano mano,  int valoresSize, Valor valores[valoresSize], int exceptSize,  int exceptArray[exceptSize]);
 
 
 #endif //PEDRO_MANO_H

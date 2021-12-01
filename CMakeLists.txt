@@ -6,4 +6,4 @@ set(CMAKE_C_STANDARD 11)
 include_directories(.)
 
 add_executable(Pedro
-        main.c Carta.c Carta.h Mano.c Mano.h Mesa.c Mesa.h Puntos.c Puntos.h)
+        main.c Carta.c Carta.h Mano.c Mano.h Mesa.c Mesa.h Puntos.c Puntos.h Crupier.c Crupier.h)
