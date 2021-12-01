@@ -14,7 +14,7 @@ typedef enum Jugador_ {
 }Jugador;
 
 typedef struct Mesa_ {
-    Carta * deck[13 * 4];
+    Carta  deck[13 * 4];
     int deckIndex;
     Mano manoUno;
     Mano manoDos;

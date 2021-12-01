@@ -15,8 +15,11 @@ typedef struct Mano_ {
     int sonMismaFigura;
     Carta masAlta;
     int i_masAlta;
+    Carta masBaja;
+    int i_masBaja;
     Puntos puntos;
     int i_cartasUtiles[5];
+    int numCartasUtiles;
 } Mano;
 
 Mano crearMano(Carta cartas[5]);
@@ -36,6 +39,9 @@ Carta esMasAlta(Mano * mano);
 bool arrayContainsValue(int valor, int size, const int array[size] );
 bool containsValue(Mano mano, Valor valor, int exceptSize,  int exceptArray[exceptSize]);
 bool containsValues(Mano mano,  int valoresSize, Valor valores[valoresSize], int exceptSize,  int exceptArray[exceptSize]);
+
+Puntos calcularPuntos(Mano * mano);
+void calcularYActualizarPuntos(Mano * mano);
 
 
 #endif //PEDRO_MANO_H

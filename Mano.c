@@ -24,6 +24,10 @@ Puntos calcularPuntos(Mano * mano) {
 
 }
 
+void calcularYActualizarPuntos(Mano * mano) {
+    mano->puntos = calcularPuntos(mano);
+}
+
 Mano crearMano(Carta cartas[5]) {
 
     Mano mano = {
@@ -33,7 +37,7 @@ Mano crearMano(Carta cartas[5]) {
             &cartas[3],
             &cartas[4],
         .sonMismaFigura = 0,
-        .masAlta =  cartas[0]
+        .numCartasUtiles = 0,
     };
 
     int primera = -1;
@@ -47,11 +51,17 @@ Mano crearMano(Carta cartas[5]) {
         mano.sonMismaFigura = 1;
     }
 
-    int mayor=0, i_mayor=0, i;
-    for (i=0; i <5; i++) if (mano.cartas[i]->valor > mayor) {mayor = mano.cartas[i]->valor; i_mayor = i;}
+    int mayor=0, i_mayor=0;
+    for (int i=0; i <5; i++) if (mano.cartas[i]->valor > mayor) {mayor = mano.cartas[i]->valor; i_mayor = i;}
 
     mano.masAlta = cartas[i_mayor];
     mano.i_masAlta = i_mayor;
+
+    int masBaja=9999,  i_menor=0;
+    for (int i=0; i <5; i++) if (mano.cartas[i]->valor < masBaja) {masBaja = mano.cartas[i]->valor; i_menor = i;}
+
+    mano.masBaja = cartas[i_menor];
+    mano.i_masBaja = i_menor;
 
     mano.puntos = calcularPuntos(&mano);
 
@@ -67,7 +77,7 @@ void mostrarMano(Mano mano) {
 bool arrayContainsValue(int valor, int size, const int array[size] ) {
     if (size == 0) return 0;
 
-    for (int i=0; i<5; i++) {
+    for (int i=0; i<size; i++) {
         if (array[i] == valor) {
             return 1;
         }
@@ -106,6 +116,7 @@ bool esEscaleraReal(Mano * mano) {
     Valor valores[] = {Diez, As, Rey, Reina, Jota};
     if ( mano->sonMismaFigura && containsValues(*mano, 5, valores, 0, 0 ) ) {
         int indices[] = {0,1,2,3,4};
+        mano->numCartasUtiles = 5;
         memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
         return 1;
     }
@@ -117,6 +128,7 @@ bool esEscaleraDeColor(Mano * mano) {
         Valor valores[] = {(Valor)i, (Valor)(i+1), (Valor)(i+2), (Valor)(i+3), (Valor)(i+4)};
         if ( mano->sonMismaFigura && containsValues(*mano, 5, valores, 0, 0) ) {
             int indices[] = {0,1,2,3,4};
+            mano->numCartasUtiles = 5;
             memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
             return 1;
         }
@@ -136,6 +148,7 @@ bool esPoquer(Mano * mano) {
             }
         }
         if (timesFound == 4) {
+            mano->numCartasUtiles = 4;
             memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
             return 1;
         }
@@ -165,6 +178,7 @@ bool esFull(Mano * mano) {
             for (int j=0; j<5; j++) if (mano->cartas[j]->valor == mano->cartas[i]->valor) timesFound++;
             if (timesFound == 2) {
                 int indices[] = {0,1,2,3,4};
+                mano->numCartasUtiles = 5;
                 memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
                 return 1;
             }
@@ -177,6 +191,7 @@ bool esFull(Mano * mano) {
 bool esColor(Mano * mano) {
     if (mano->sonMismaFigura) {
         int indices[] = {0,1,2,3,4};
+        mano->numCartasUtiles = 5;
         memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
         return 1;
     }
@@ -188,6 +203,7 @@ bool esEscalera(Mano * mano) {
         Valor valores[] = {(Valor)i, (Valor)(i+1), (Valor)(i+2), (Valor)(i+3), (Valor)(i+4)};
         if (containsValues(*mano, 5, valores, 0, 0) ) {
             int indices[] = {0,1,2,3,4};
+            mano->numCartasUtiles = 5;
             memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
             return 1;
         }
@@ -205,6 +221,7 @@ bool esTrio(Mano * mano) {
             timesFound++;
         }
         if (timesFound == 3) {
+            mano->numCartasUtiles = 3;
             memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
             return 1;
         }
@@ -241,6 +258,7 @@ bool esDoblePareja(Mano * mano) {
                     timesFound++;
                 }
             if (timesFound == 4){
+                mano->numCartasUtiles = 4;
                 memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
                 return 1;
             }
@@ -279,7 +297,7 @@ bool esPareja(Mano * mano) {
             tresRestantes[j] = mano->cartas[i]->valor;
             j++;
         }
-
+        mano->numCartasUtiles = 2;
         memcpy(&mano->i_cartasUtiles, indices, 5*sizeof(int));
         return 1;
     } else {

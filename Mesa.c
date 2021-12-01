@@ -2,6 +2,7 @@
 // Created by Alejandro D on 30/11/21.
 //
 #include <stdio.h>
+#include <libc.h>
 #include "Mesa.h"
 
 Jugador determinarGanador_(Mesa *mesa) {
@@ -22,24 +23,28 @@ void determinarGanador(Mesa  * mesa) {
 
 void mostrarGanador(Mesa *mesa) {
 
-    printf("La mano ganadora es: "
-        "%s\n", mesa->ganador == JugadorUno ? "La 1" :  mesa->ganador == JugadorDos ? "La 2" : "Empate"
+    printf("La mano ganadora es "
+        "%s\n", mesa->ganador == JugadorUno ? "la 1 (Crupier)" :  mesa->ganador == JugadorDos ? "la 2 (Tu)" : "Empate"
     );
 }
 
 void cambiarCarta(Mesa * mesa, Jugador jugador, int i) {
-    if (jugador == JugadorUno) mesa->manoUno.cartas[i] = (Carta *) &mesa->deck[mesa->deckIndex];
+    if (jugador == JugadorUno) mesa->manoUno.cartas[i] = &mesa->deck[mesa->deckIndex];
     else mesa->manoDos.cartas[i] = (Carta *) &mesa->deck[mesa->deckIndex];
-    mesa->deckIndex--;
+
+    mesa->deckIndex-=1;
 }
 
-Mesa crearMesa(Carta deck[13 * 4], Mano mano1, Mano mano2) {
+Mesa crearMesa(Carta   deck[13 * 4], Mano mano1, Mano mano2) {
     Mesa mesa = {
-            .deck =  deck,
+            .deck =  0,
             .manoUno = mano1,
             .manoDos = mano2,
             .ganador = None,
             .deckIndex = 41
     };
+
+    memcpy(mesa.deck, deck, (13*4)*(sizeof (Carta)));
+
     return mesa;
 }

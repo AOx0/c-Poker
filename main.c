@@ -15,12 +15,14 @@
 #include "Carta.h"
 #include "Mano.h"
 #include "Mesa.h"
+#include "Crupier.h"
 
 void shuffle( int [4][ 13 ] );
 void reparte( int [4][ 13 ],  Carta [4 * 13]  );
 
-void evaluaUnaMano(Mano mano) {
-    mostrarTipoMano(mano.puntos);
+void evaluaUnaMano(Mano * mano) {
+    calcularYActualizarPuntos(mano);
+    mostrarTipoMano(mano->puntos);
 }
 
 void evaluaDosManos(Carta deck[13*4], Mano mano1, Mano mano2) {
@@ -78,24 +80,102 @@ int main( void ) {
 
         if (opcion == 5) break;
 
+
+
         switch (opcion) {
             case 1:
                 puts("Evaluando la mano:");
                 mostrarMano(mesa.manoUno);
-                evaluaUnaMano(mesa.manoUno);
+                evaluaUnaMano(&mesa.manoUno);
 
                 break;
             case 2:
                 puts("Evaluando como mano 1:");
                 mostrarMano(mesa.manoUno);
-                evaluaUnaMano(mesa.manoUno);
+                evaluaUnaMano(&mesa.manoUno);
 
                 puts("Evaluando como mano 2:");
                 mostrarMano(mesa.manoDos);
-                evaluaUnaMano(mesa.manoDos);
+                evaluaUnaMano(&mesa.manoDos);
                 evaluaDosManos(cartas, mesa.manoUno, mesa.manoDos);
 
                 break;
+            case 3:
+                puts("El Crupier tiene: ");
+                mostrarMano(mesa.manoUno);
+                evaluaUnaMano(&mesa.manoUno);
+
+
+                puts(" ");{
+                    int changedValues[3] = {-1, -1,-1};
+                    juegaCrupier(&mesa, 1, 0, mesa.manoUno.puntos, changedValues);
+                }
+
+                puts(" ");
+
+                puts("El Crupier terminó con: ");
+                mostrarMano(mesa.manoUno);
+                evaluaUnaMano(&mesa.manoUno);
+                break;
+            case 4:
+
+                puts("El Crupier cambiará algunas cartas: \n");
+
+                {
+                    int changedValues[3] = {-1, -1, -1};
+                    juegaCrupier(&mesa, 0, 0, mesa.manoUno.puntos, changedValues);
+                }
+                puts("El Crupier ya cambió sus cartas. Es tu turno.\n");
+
+
+                char quiereCambio;
+                int index = -1;
+                int changedValues[3] = {-1, -1,-1};
+
+                for (int i=0; i<3; i++) {
+                    puts("Tus cartas son: ");
+                    mostrarMano(mesa.manoDos);
+                    evaluaUnaMano(&mesa.manoDos);
+
+                    printf("¿Quieres cambiar %s carta? [y/n]: ", i == 0 ? "una" : "otra");
+                    scanf(" %c", &quiereCambio);
+
+                    if (quiereCambio == 'y') {
+                        printf("¿Qué carta quieres cambiar? [1-5]: ");
+                        scanf(" %d", &index);
+                        index--;
+
+                        if (arrayContainsValue(index, 3, changedValues)) {
+                            puts("No puedes cambiar la misma carta, intenta con otra");
+                            i--;
+                            continue;
+                        }
+
+                        if (index < 0 || index > 5) {
+                            puts("Ingresa una carta válida [1-5]");
+                            i--;
+                            continue;
+                        }
+
+                        cambiarCarta(&mesa, JugadorDos, index);
+                        changedValues[i] = index;
+                    } else{
+                        break;
+                    }
+                }
+
+                puts("Las cartas del Crupier son: ");
+                mostrarMano(mesa.manoUno);
+                evaluaUnaMano(&mesa.manoUno);
+
+                puts("Tus cartas son: ");
+                mostrarMano(mesa.manoDos);
+                evaluaUnaMano(&mesa.manoDos);
+
+                evaluarMesa(&mesa);
+
+                break;
+
         }
 
         printf("\n");
