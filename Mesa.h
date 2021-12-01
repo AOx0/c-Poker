@@ -4,8 +4,8 @@
 
 #include "Mano.h"
 
-#ifndef PEDRO_MESA_H
-#define PEDRO_MESA_H
+#ifndef POKER_MESA_H
+#define POKER_MESA_H
 
 typedef enum Jugador_ {
     JugadorUno,
@@ -28,4 +28,4 @@ Mesa crearMesa(Carta deck[13 * 4], Mano mano1, Mano mano2);
 void cambiarCarta(Mesa * mesa, Jugador jugador, int i);
 
 
-#endif //PEDRO_MESA_H
+#endif //POKER_MESA_H

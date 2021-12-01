@@ -4,8 +4,8 @@
 
 #define bool int
 
-#ifndef PEDRO_MANO_H
-#define PEDRO_MANO_H
+#ifndef POKER_MANO_H
+#define POKER_MANO_H
 
 #include "Carta.h"
 #include "Puntos.h"
@@ -44,4 +44,4 @@ Puntos calcularPuntos(Mano * mano);
 void calcularYActualizarPuntos(Mano * mano);
 
 
-#endif //PEDRO_MANO_H
+#endif //POKER_MANO_H

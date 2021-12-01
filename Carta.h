@@ -7,8 +7,8 @@
 * @date 30/11/2021
 */
 
-#ifndef PEDRO_CARTA_H
-#define PEDRO_CARTA_H
+#ifndef POKER_CARTA_H
+#define POKER_CARTA_H
 
 typedef enum Figura_ {
     Corazones = 1,
@@ -41,4 +41,4 @@ typedef struct Carta_ {
 
 void imprimirCarta(Carta carta);
 
-#endif //PEDRO_CARTA_H
+#endif //POKER_CARTA_H

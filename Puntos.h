@@ -4,8 +4,8 @@
 
 
 
-#ifndef PEDRO_PUNTOS_H
-#define PEDRO_PUNTOS_H
+#ifndef POKER_PUNTOS_H
+#define POKER_PUNTOS_H
 
 
 typedef enum Puntos_ {
@@ -25,4 +25,4 @@ void mostrarTipoMano(Puntos puntos);
 
 
 
-#endif //PEDRO_PUNTOS_H
+#endif //POKER_PUNTOS_H
