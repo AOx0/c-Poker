@@ -37,15 +37,18 @@ void evaluarMesa(Mesa * mesa) {
 
 int main( void ) {
 
-    srand( time( 0 ) );
 
+    while (1) {
 
-    int deck[ 4 ][ 13 ] = { 0 };
-    Carta cartas[13 * 4];
-    Mesa mesa;
+        int opcion;
 
-    {
+        int deck[ 4 ][ 13 ] = { 0 };
+        Carta cartas[13 * 4];
+        Mesa mesa;
+
         Mano manoUno, manoDos;
+
+        srand( time( 0 ) );
 
         shuffle( deck );
         reparte( deck, cartas );
@@ -57,39 +60,48 @@ int main( void ) {
         manoDos = crearMano(parte2);
 
         mesa = crearMesa(cartas, manoUno, manoDos);
+
+
+
+
+        printf(
+                "Menú\n"
+                "1.Evalúa una mano\n"
+                "2.Evalúa dos manos\n"
+                "3.El crupier juega\n"
+                "4.Un juego vs el crupier\n"
+                "5.Fin\n"
+        );
+        printf("Elige tu opción: ");
+
+
+
+
+        scanf(" %d", &opcion);
+
+        if (opcion == 5) break;
+
+        switch (opcion) {
+            case 1:
+                puts("Evaluando la mano:");
+                mostrarMano(mesa.manoUno);
+                evaluaUnaMano(mesa.manoUno);
+                break;
+            case 2:
+                puts("Evaluando como mano 1:");
+                mostrarMano(mesa.manoUno);
+                evaluaUnaMano(mesa.manoUno);
+
+                puts("Evaluando como mano 2:");
+                mostrarMano(mesa.manoDos);
+                evaluaUnaMano(mesa.manoDos);
+                evaluaDosManos(cartas, mesa.manoUno, mesa.manoDos);
+                break;
+        }
+
+        printf("\n");
     }
 
-    puts("Mano 1:");
-    mostrarMano(mesa.manoUno);
-    evaluaUnaMano(mesa.manoUno);
-
-    cambiarCarta(&mesa, JugadorUno, 4);
-
-    puts("Mano 1:");
-    mostrarMano(mesa.manoUno);
-    evaluaUnaMano(mesa.manoUno);
-
-    puts("Mano 2:");
-    mostrarMano(mesa.manoDos);
-    evaluaUnaMano(mesa.manoDos);
-
-
-    evaluarMesa(&mesa);
-
-
-
-    printf(
-        "Menú\n"
-       "1.Evalúa una mano\n"
-       "2.Evalúa dos manos\n"
-       "3.El crupier juega\n"
-       "4.Un juego vs el crupier\n"
-       "5.Fin\n"
-   );
-
-    int opcion;
-
-    scanf("%d", opcion);
 
 
 

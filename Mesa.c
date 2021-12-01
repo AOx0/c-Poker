@@ -12,6 +12,7 @@ Jugador determinarGanador_(Mesa *mesa) {
     if ((int)mesa->manoUno.masAlta.valor > (int)mesa->manoDos.masAlta.valor) return JugadorUno;
     if ((int)mesa->manoUno.masAlta.valor < (int)mesa->manoDos.masAlta.valor) return JugadorDos;
 
+
     return None;
 }
 
@@ -21,8 +22,8 @@ void determinarGanador(Mesa  * mesa) {
 
 void mostrarGanador(Mesa *mesa) {
 
-    printf("El ganador es: "
-        "%s\n", mesa->ganador == JugadorUno ? "El jugador 1" :  mesa->ganador == JugadorDos ? "El jugador 2" : "Empate"
+    printf("La mano ganadora es: "
+        "%s\n", mesa->ganador == JugadorUno ? "La 1" :  mesa->ganador == JugadorDos ? "La 2" : "Empate"
     );
 }
 
