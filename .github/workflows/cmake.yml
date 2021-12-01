@@ -31,5 +31,5 @@ jobs:
       run: make .
       
     - name: Run
-      run: ls
+      run: /home/runner/work/c-Poker/c-Poker/poker
       
