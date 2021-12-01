@@ -74,9 +74,6 @@ int main( void ) {
         );
         printf("Elige tu opción: ");
 
-
-
-
         scanf(" %d", &opcion);
 
         if (opcion == 5) break;
@@ -86,6 +83,7 @@ int main( void ) {
                 puts("Evaluando la mano:");
                 mostrarMano(mesa.manoUno);
                 evaluaUnaMano(mesa.manoUno);
+
                 break;
             case 2:
                 puts("Evaluando como mano 1:");
@@ -96,6 +94,7 @@ int main( void ) {
                 mostrarMano(mesa.manoDos);
                 evaluaUnaMano(mesa.manoDos);
                 evaluaDosManos(cartas, mesa.manoUno, mesa.manoDos);
+
                 break;
         }
 
