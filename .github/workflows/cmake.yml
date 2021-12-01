@@ -29,7 +29,4 @@ jobs:
     - name: Build
       # Build your program with the given configuration
       run: make .
-    
-    - name: Run
-      run: ls /home/runner/work/c-Poker/c-Poker
       
